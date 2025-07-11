@@ -1,116 +1,122 @@
-/* AppStyles.css - clean, modern styling */
-
+/* Base Reset */
 body {
   margin: 0;
   font-family: "Segoe UI", sans-serif;
-  background-color: #f4f6f9;
+  background-color: #f0f2f5;
+  color: #333;
 }
 
-.navbar {
-  background-color: #007bff;
-  padding: 12px 20px;
-  color: white;
-  font-size: 20px;
-  display: flex;
-  align-items: center;
-}
-
-.navbar a {
-  color: white;
-  text-decoration: none;
-  margin-left: 15px;
-  font-weight: 500;
-}
-
-.navbar a:hover {
-  text-decoration: underline;
-}
-
-.page {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+/* Container Card */
+.container {
+  max-width: 900px;
+  margin: 40px auto;
+  background: #ffffff;
+  border-radius: 16px;
   padding: 30px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.card {
-  background: white;
-  border-radius: 12px;
-  padding: 30px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  max-width: 800px;
-  width: 95%;
+.container:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
 }
 
 h2 {
-  color: #007bff;
-  margin-bottom: 20px;
   text-align: center;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.form label {
+  color: #007bff;
+  margin-bottom: 25px;
   font-weight: 600;
 }
 
-.form input {
-  padding: 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-}
-
-.submit-button {
+/* Download Button */
+.download-btn {
   background-color: #007bff;
-  color: white;
-  padding: 12px;
+  color: #ffffff;
+  padding: 10px 18px;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
-  font-weight: 600;
-  margin-top: 10px;
+  font-weight: 500;
+  transition: background 0.3s, transform 0.2s;
+  box-shadow: 0 4px 8px rgba(0, 123, 255, 0.3);
+  margin-bottom: 20px;
 }
 
-.submit-button:hover {
+.download-btn:hover {
   background-color: #0056b3;
+  transform: translateY(-2px);
+}
+
+/* Table Styling */
+.table-container {
+  overflow-x: auto;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
-}
-
-th,
-td {
-  border: 1px solid #ddd;
-  padding: 10px;
-  text-align: center;
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 th {
   background-color: #007bff;
-  color: white;
+  color: #ffffff;
+  text-align: left;
+  padding: 14px;
+  font-weight: 500;
+}
+
+td {
+  padding: 12px;
+  border-bottom: 1px solid #e0e0e0;
 }
 
 tr:nth-child(even) {
   background-color: #f9f9f9;
 }
 
-.delete-button {
-  background-color: #dc3545;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 14px;
+tr:hover {
+  background-color: #eef3fb;
 }
 
-.delete-button:hover {
-  background-color: #c82333;
+/* Remove Button */
+.delete-btn {
+  background-color: #e53935;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  box-shadow: 0 3px 6px rgba(229, 57, 53, 0.3);
+  transition: background 0.3s, transform 0.2s;
+}
+
+.delete-btn:hover {
+  background-color: #b71c1c;
+  transform: translateY(-1px);
+}
+
+/* Responsive for mobile */
+@media (max-width: 600px) {
+  .container {
+    margin: 20px;
+    padding: 20px;
+  }
+
+  th,
+  td {
+    padding: 10px;
+  }
+
+  .download-btn,
+  .delete-btn {
+    width: 100%;
+    text-align: center;
+  }
 }

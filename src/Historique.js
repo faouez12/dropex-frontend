@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import jsPDF from "jspdf";
-import "jspdf-autotable";
+import autoTable from "jspdf-autotable";
 import "./App.css";
 
-const Historique = () => {
+function Historique() {
   const [tripLogs, setTripLogs] = useState([]);
 
   useEffect(() => {
@@ -13,31 +13,29 @@ const Historique = () => {
 
   const fetchTripLogs = async () => {
     try {
-      const res = await axios.get(
+      const response = await axios.get(
         "https://dropex-backend.onrender.com/api/triplogs"
       );
-      setTripLogs(res.data);
-    } catch (err) {
-      console.error(err);
+      setTripLogs(response.data);
+    } catch (error) {
+      console.error("Error fetching trip logs:", error);
     }
   };
 
   const deleteTripLog = async (id) => {
-    if (window.confirm("Are you sure you want to delete this trip log?")) {
-      try {
-        await axios.delete(
-          `https://dropex-backend.onrender.com/api/triplogs/${id}`
-        );
-        fetchTripLogs();
-      } catch (err) {
-        console.error(err);
-      }
+    try {
+      await axios.delete(
+        `https://dropex-backend.onrender.com/api/triplogs/${id}`
+      );
+      fetchTripLogs();
+    } catch (error) {
+      console.error("Error deleting trip log:", error);
     }
   };
 
   const downloadPDF = () => {
     const doc = new jsPDF();
-    doc.text("Historique des Trip Logs", 14, 20);
+    doc.text("Historique des Trip Logs", 14, 15);
 
     const tableColumn = [
       "Branch",
@@ -52,21 +50,21 @@ const Historique = () => {
 
     tripLogs.forEach((log) => {
       const logData = [
-        log.branch || "-",
-        log.matricule || "-",
-        log.vehicleType || "-",
-        log.driverName || "-",
-        log.kmToday || "-",
-        log.fuelCost || "-",
-        log.fraisPer100Km ? log.fraisPer100Km.toFixed(2) : "-",
+        log.branch,
+        log.matricule,
+        log.vehicleType,
+        log.driverName,
+        log.kmToday,
+        log.fuelCost,
+        log.frais100km,
       ];
       tableRows.push(logData);
     });
 
-    doc.autoTable({
+    autoTable(doc, {
       head: [tableColumn],
       body: tableRows,
-      startY: 30,
+      startY: 25,
     });
 
     doc.save("Historique_TripLogs.pdf");
@@ -74,11 +72,11 @@ const Historique = () => {
 
   return (
     <div className="container">
-      <div className="card">
-        <h2>📜 Historique des Trip Logs</h2>
-        <button className="download-button" onClick={downloadPDF}>
-          📥 Download PDF
-        </button>
+      <h2>📜 Historique des Trip Logs</h2>
+      <button className="download-btn" onClick={downloadPDF}>
+        Download PDF
+      </button>
+      <div className="table-container">
         <table>
           <thead>
             <tr>
@@ -101,15 +99,13 @@ const Historique = () => {
                 <td>{log.driverName}</td>
                 <td>{log.kmToday}</td>
                 <td>{log.fuelCost}</td>
-                <td>
-                  {log.fraisPer100Km ? log.fraisPer100Km.toFixed(2) : "0.00"}
-                </td>
+                <td>{log.frais100km}</td>
                 <td>
                   <button
-                    className="delete-button"
+                    className="delete-btn"
                     onClick={() => deleteTripLog(log._id)}
                   >
-                    🗑️ Remove
+                    Remove
                   </button>
                 </td>
               </tr>
@@ -119,6 +115,6 @@ const Historique = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Historique;
