@@ -1,24 +1,38 @@
 import React, { useEffect, useState } from "react";
 import "./AppStyles.css";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+} from "recharts";
 
 function Dashboard() {
   const [tripLogs, setTripLogs] = useState([]);
-  const [totalFuelCost, setTotalFuelCost] = useState(0);
+  const [totalFuel, setTotalFuel] = useState(0);
 
-  useEffect(() => {
-    const fetchData = async () => {
+  const fetchTripLogs = async () => {
+    try {
       const res = await fetch(
         "https://dropex-backend.onrender.com/api/triplogs"
       );
       const data = await res.json();
       setTripLogs(data);
-      const totalCost = data.reduce(
-        (sum, log) => sum + (parseFloat(log.fuelCost) || 0),
+
+      const totalFuelCost = data.reduce(
+        (acc, log) => acc + (log.fuelCost || 0),
         0
       );
-      setTotalFuelCost(totalCost);
-    };
-    fetchData();
+      setTotalFuel(totalFuelCost);
+    } catch (err) {
+      console.error("Error fetching trip logs:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchTripLogs();
   }, []);
 
   return (
@@ -26,10 +40,21 @@ function Dashboard() {
       <div className="card">
         <h2>📊 Dashboard</h2>
         <p>Welcome to Dropex. Quick overview for your operations.</p>
-        <h3>Total Trip Logs</h3>
-        <p>{tripLogs.length}</p>
-        <h3>Total Fuel Cost (TND)</h3>
-        <p>{totalFuelCost.toFixed(2)}</p>
+        <p>
+          <strong>Total Trip Logs:</strong> {tripLogs.length}
+        </p>
+        <p>
+          <strong>Total Fuel Cost (TND):</strong> {totalFuel.toFixed(2)}
+        </p>
+        <h3>Fuel Cost per Trip Log</h3>
+        <ResponsiveContainer width="100%" height={300}>
+          <BarChart data={tripLogs}>
+            <XAxis dataKey="driverName" />
+            <YAxis />
+            <Tooltip />
+            <Bar dataKey="fuelCost" fill="#007bff" />
+          </BarChart>
+        </ResponsiveContainer>
       </div>
     </div>
   );

@@ -4,16 +4,34 @@ import "./AppStyles.css";
 function Historique() {
   const [tripLogs, setTripLogs] = useState([]);
 
-  useEffect(() => {
-    const fetchTripLogs = async () => {
+  const fetchTripLogs = async () => {
+    try {
       const res = await fetch(
         "https://dropex-backend.onrender.com/api/triplogs"
       );
       const data = await res.json();
       setTripLogs(data);
-    };
+    } catch (err) {
+      console.error("Error fetching trip logs:", err);
+    }
+  };
+
+  useEffect(() => {
     fetchTripLogs();
   }, []);
+
+  const handleDelete = async (id) => {
+    if (!window.confirm("Are you sure you want to delete this trip log?"))
+      return;
+    try {
+      await fetch(`https://dropex-backend.onrender.com/api/triplogs/${id}`, {
+        method: "DELETE",
+      });
+      fetchTripLogs(); // Refresh data
+    } catch (err) {
+      console.error("Error deleting trip log:", err);
+    }
+  };
 
   return (
     <div className="page">
@@ -29,6 +47,7 @@ function Historique() {
               <th>KM Today</th>
               <th>Fuel Cost (TND)</th>
               <th>Frais/100 KM</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -41,6 +60,14 @@ function Historique() {
                 <td>{log.kmToday || "-"}</td>
                 <td>{log.fuelCost || "-"}</td>
                 <td>{log.frais_100km ? log.frais_100km.toFixed(2) : "-"}</td>
+                <td>
+                  <button
+                    className="delete-button"
+                    onClick={() => handleDelete(log._id)}
+                  >
+                    🗑️ Delete
+                  </button>
+                </td>
               </tr>
             ))}
           </tbody>
