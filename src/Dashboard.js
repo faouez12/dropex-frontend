@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./AppStyles.css";
+import axios from "axios";
 import {
   BarChart,
   Bar,
@@ -9,55 +9,71 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-function Dashboard() {
+const Dashboard = () => {
   const [tripLogs, setTripLogs] = useState([]);
-  const [totalFuel, setTotalFuel] = useState(0);
-
-  const fetchTripLogs = async () => {
-    try {
-      const res = await fetch(
-        "https://dropex-backend.onrender.com/api/triplogs"
-      );
-      const data = await res.json();
-      setTripLogs(data);
-
-      const totalFuelCost = data.reduce(
-        (acc, log) => acc + (log.fuelCost || 0),
-        0
-      );
-      setTotalFuel(totalFuelCost);
-    } catch (err) {
-      console.error("Error fetching trip logs:", err);
-    }
-  };
+  const [totalFuelCost, setTotalFuelCost] = useState(0);
 
   useEffect(() => {
-    fetchTripLogs();
+    const fetchData = async () => {
+      try {
+        const res = await axios.get(
+          "https://dropex-backend.onrender.com/api/triplogs"
+        );
+        setTripLogs(res.data);
+
+        const totalCost = res.data.reduce(
+          (sum, log) => sum + parseFloat(log.fuelCost || 0),
+          0
+        );
+        setTotalFuelCost(totalCost);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchData();
   }, []);
 
+  const chartData = tripLogs.map((log) => ({
+    driverName: log.driverName,
+    fuelCost: parseFloat(log.fuelCost),
+  }));
+
   return (
-    <div className="page">
-      <div className="card">
-        <h2>📊 Dashboard</h2>
-        <p>Welcome to Dropex. Quick overview for your operations.</p>
-        <p>
-          <strong>Total Trip Logs:</strong> {tripLogs.length}
+    <div className="container mt-5">
+      <div className="card shadow p-4">
+        <h2 className="text-center mb-4">
+          <span role="img" aria-label="dashboard">
+            📊
+          </span>{" "}
+          Dashboard
+        </h2>
+        <p className="text-center">
+          Welcome to Dropex. Quick overview for your operations.
         </p>
-        <p>
-          <strong>Total Fuel Cost (TND):</strong> {totalFuel.toFixed(2)}
-        </p>
-        <h3>Fuel Cost per Trip Log</h3>
-        <ResponsiveContainer width="100%" height={300}>
-          <BarChart data={tripLogs}>
-            <XAxis dataKey="driverName" />
-            <YAxis />
-            <Tooltip />
-            <Bar dataKey="fuelCost" fill="#007bff" />
-          </BarChart>
-        </ResponsiveContainer>
+
+        <div className="text-center mt-4">
+          <h5>
+            <strong>Total Trip Logs:</strong> {tripLogs.length}
+          </h5>
+          <h5>
+            <strong>Total Fuel Cost (TND):</strong> {totalFuelCost.toFixed(2)}
+          </h5>
+        </div>
+
+        <div className="mt-5">
+          <h5 className="text-center mb-3">Fuel Cost per Trip Log</h5>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={chartData}>
+              <XAxis dataKey="driverName" />
+              <YAxis />
+              <Tooltip />
+              <Bar dataKey="fuelCost" fill="#007bff" />
+            </BarChart>
+          </ResponsiveContainer>
+        </div>
       </div>
     </div>
   );
-}
+};
 
 export default Dashboard;
