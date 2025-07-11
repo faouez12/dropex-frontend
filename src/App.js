@@ -1,41 +1,23 @@
 import React from "react";
-import VehicleTable from "./VehicleTable";
-import TripLogForm from "./TripLogForm";
-import TripLogTable from "./TripLogTable";
-import TripLogCharts from "./TripLogCharts";
-import VehicleStatusPie from "./VehicleStatusPie";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navbar from "./Navbar";
+import Dashboard from "./Dashboard";
+import AddTripLog from "./AddTripLog";
+import Historique from "./Historique";
+import "./AppStyles.css";
 
 function App() {
   return (
-    <div style={{ padding: "20px", fontFamily: "sans-serif" }}>
-      <h1>🚚 Dropex Vehicle & Trip Tracker</h1>
-
-      {/* Vehicle Management */}
-      <VehicleTable />
-
-      {/* Trip Log Form */}
-      <TripLogForm />
-
-      {/* Trip Log Table */}
-      <TripLogTable />
-
-      {/* Trip Log Charts */}
-      <TripLogCharts />
-
-      {/* Vehicle Status Pie Chart */}
-      <VehicleStatusPie />
-
-      <footer
-        style={{
-          marginTop: "40px",
-          textAlign: "center",
-          fontSize: "14px",
-          color: "#555",
-        }}
-      >
-        © {new Date().getFullYear()} Dropex | Managed with ❤️ by Germik
-      </footer>
-    </div>
+    <Router>
+      <Navbar />
+      <div className="container">
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/add-trip-log" element={<AddTripLog />} />
+          <Route path="/historique" element={<Historique />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
