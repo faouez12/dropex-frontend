@@ -159,3 +159,6 @@ tr:hover {
   font-weight: bold;
   margin-top: 8px;
 }
+body {
+  background-color: red;
+}
