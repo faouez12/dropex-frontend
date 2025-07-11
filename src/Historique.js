@@ -1,42 +1,84 @@
 import React, { useEffect, useState } from "react";
-import "./AppStyles.css";
+import axios from "axios";
+import jsPDF from "jspdf";
+import "jspdf-autotable";
+import "./App.css";
 
-function Historique() {
+const Historique = () => {
   const [tripLogs, setTripLogs] = useState([]);
-
-  const fetchTripLogs = async () => {
-    try {
-      const res = await fetch(
-        "https://dropex-backend.onrender.com/api/triplogs"
-      );
-      const data = await res.json();
-      setTripLogs(data);
-    } catch (err) {
-      console.error("Error fetching trip logs:", err);
-    }
-  };
 
   useEffect(() => {
     fetchTripLogs();
   }, []);
 
-  const handleDelete = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this trip log?"))
-      return;
+  const fetchTripLogs = async () => {
     try {
-      await fetch(`https://dropex-backend.onrender.com/api/triplogs/${id}`, {
-        method: "DELETE",
-      });
-      fetchTripLogs(); // Refresh data
+      const res = await axios.get(
+        "https://dropex-backend.onrender.com/api/triplogs"
+      );
+      setTripLogs(res.data);
     } catch (err) {
-      console.error("Error deleting trip log:", err);
+      console.error(err);
     }
   };
 
+  const deleteTripLog = async (id) => {
+    if (window.confirm("Are you sure you want to delete this trip log?")) {
+      try {
+        await axios.delete(
+          `https://dropex-backend.onrender.com/api/triplogs/${id}`
+        );
+        fetchTripLogs();
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  };
+
+  const downloadPDF = () => {
+    const doc = new jsPDF();
+    doc.text("Historique des Trip Logs", 14, 20);
+
+    const tableColumn = [
+      "Branch",
+      "Matricule",
+      "Vehicle Type",
+      "Driver Name",
+      "KM Today",
+      "Fuel Cost (TND)",
+      "Frais/100 KM",
+    ];
+    const tableRows = [];
+
+    tripLogs.forEach((log) => {
+      const logData = [
+        log.branch || "-",
+        log.matricule || "-",
+        log.vehicleType || "-",
+        log.driverName || "-",
+        log.kmToday || "-",
+        log.fuelCost || "-",
+        log.fraisPer100Km ? log.fraisPer100Km.toFixed(2) : "-",
+      ];
+      tableRows.push(logData);
+    });
+
+    doc.autoTable({
+      head: [tableColumn],
+      body: tableRows,
+      startY: 30,
+    });
+
+    doc.save("Historique_TripLogs.pdf");
+  };
+
   return (
-    <div className="page">
+    <div className="container">
       <div className="card">
         <h2>📜 Historique des Trip Logs</h2>
+        <button className="download-button" onClick={downloadPDF}>
+          📥 Download PDF
+        </button>
         <table>
           <thead>
             <tr>
@@ -53,19 +95,21 @@ function Historique() {
           <tbody>
             {tripLogs.map((log) => (
               <tr key={log._id}>
-                <td>{log.branch || "-"}</td>
-                <td>{log.matricule || "-"}</td>
-                <td>{log.vehicleType || "-"}</td>
-                <td>{log.driverName || "-"}</td>
-                <td>{log.kmToday || "-"}</td>
-                <td>{log.fuelCost || "-"}</td>
-                <td>{log.frais_100km ? log.frais_100km.toFixed(2) : "-"}</td>
+                <td>{log.branch}</td>
+                <td>{log.matricule}</td>
+                <td>{log.vehicleType}</td>
+                <td>{log.driverName}</td>
+                <td>{log.kmToday}</td>
+                <td>{log.fuelCost}</td>
+                <td>
+                  {log.fraisPer100Km ? log.fraisPer100Km.toFixed(2) : "0.00"}
+                </td>
                 <td>
                   <button
                     className="delete-button"
-                    onClick={() => handleDelete(log._id)}
+                    onClick={() => deleteTripLog(log._id)}
                   >
-                    🗑️ Delete
+                    🗑️ Remove
                   </button>
                 </td>
               </tr>
@@ -75,6 +119,6 @@ function Historique() {
       </div>
     </div>
   );
-}
+};
 
 export default Historique;
