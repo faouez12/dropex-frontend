@@ -1,87 +1,98 @@
-/* Base styling */
+/* ==== GENERAL ==== */
 body {
   margin: 0;
-  font-family: "Segoe UI", sans-serif;
-  background-color: #f5f7fa;
-  color: #333;
+  font-family: Arial, sans-serif;
+  background: #f5f7fa;
 }
 
-.container {
-  max-width: 900px;
-  margin: 20px auto;
-  padding: 20px;
-}
-
-/* Navbar styling */
-.navbar {
-  background-color: #007bff;
-  color: white;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 30px;
-}
-
-.navbar-title {
-  font-size: 20px;
-  font-weight: bold;
-}
-
-.navbar-links a {
-  color: white;
-  text-decoration: none;
-  margin-left: 20px;
-  font-size: 16px;
-  transition: color 0.3s;
-}
-
-.navbar-links a:hover {
-  color: #d1e0ff;
-}
-
-/* Page content styling */
+/* ==== PAGE WRAPPER ==== */
 .page {
-  background-color: white;
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
-}
-
-.page h2 {
-  color: #007bff;
-  text-align: center;
-  margin-bottom: 15px;
-}
-
-.page p {
-  text-align: center;
-  font-size: 16px;
-  color: #555;
-}
-.dashboard-cards {
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 20px;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+}
+
+/* ==== CARD ==== */
+.card {
+  background: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 600px;
+  width: 100%;
+}
+
+/* ==== TITLES ==== */
+h2 {
+  color: #007bff;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* ==== FORM ==== */
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form label {
+  margin: 8px 0 4px;
+  font-weight: 500;
+}
+
+.form input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.form input:focus {
+  outline: none;
+  border-color: #007bff;
+}
+
+/* ==== BUTTON ==== */
+.submit-button {
+  margin-top: 20px;
+  background: #007bff;
+  color: #fff;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 15px;
+  transition: background 0.2s;
+}
+
+.submit-button:hover {
+  background: #0056b3;
+}
+
+/* ==== TABLE ==== */
+table {
+  border-collapse: collapse;
+  width: 100%;
   margin-top: 20px;
 }
 
-.dashboard-card {
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
-  padding: 20px;
-  width: 200px;
+table th,
+table td {
+  border: 1px solid #ddd;
+  padding: 12px 15px;
   text-align: center;
 }
 
-.dashboard-card h3 {
-  color: #007bff;
-  margin-bottom: 10px;
+table th {
+  background: #007bff;
+  color: #fff;
 }
 
-.dashboard-card p {
-  font-size: 24px;
-  font-weight: bold;
-  color: #333;
+table tr:nth-child(even) {
+  background: #f9f9f9;
+}
+
+table tr:hover {
+  background: #f1f1f1;
 }

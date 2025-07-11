@@ -1,51 +1,58 @@
-# 🚚 Dropex Vehicle Tracker
+# 🚚 Dropex Vehicle & Trip Log Management System
 
-A **full-stack Node.js + React application** to **manage and track Dropex vehicle fleet**, enabling:
-✅ Vehicle registration  
-✅ Tracking KM driven per day  
-✅ Fuel consumption monitoring  
-✅ Generating QR codes for each vehicle  
-✅ Downloadable PDF reports  
-✅ Visual chart analytics for PFE presentation
+A clean, supervisor-friendly vehicle and trip log tracking system built with **React + Node.js + MongoDB**, designed for efficient fuel management and daily operations at Dropex.
+
+---
+
+## ✨ Features
+
+✅ **Dashboard** with:
+- Total trip logs count
+- Total fuel cost summary
+
+✅ **Add Trip Log**:
+- Enter branch, matricule, vehicle type, driver name, KM today, fuel cost easily
+- Clean, organized form for daily operations
+
+✅ **Historique**:
+- View all trip logs in a clean, filterable table
+- Clear columns for supervisors: Branch, Matricule, Vehicle Type, Driver Name, KM Today, Fuel Cost, Frais/100 KM
+
+✅ **Fully Responsive** and easy to use
+
+---
+
+## 🚀 Tech Stack
+
+- **Frontend:** React, React Router
+- **Backend:** Node.js, Express, MongoDB Atlas
+- **Deployment:** Vercel (frontend), Render (backend)
+
+---
+
+## 🌐 Live Demo
+
+🔗 [View Dropex Frontend Live](https://dropex-frontend.vercel.app)
 
 ---
 
 ## 📸 Screenshots
 
-![Vehicle List](./screenshots/vehicle-list.png)
-![Add Vehicle](./screenshots/add-vehicle.png)
-![QR Code](./screenshots/qr-code.png)
-![PDF Report](./screenshots/pdf-report.png)
-![Charts](./screenshots/charts.png)
+### Dashboard
+![Dashboard](https://via.placeholder.com/800x400.png?text=Dashboard+Screenshot)
 
-_(Capture and place screenshots in a `/screenshots` folder for your report and GitHub.)_
+### Add Trip Log
+![Add Trip Log](https://via.placeholder.com/800x400.png?text=Add+Trip+Log+Screenshot)
 
----
-
-## 🚀 Features
-
-✅ Add, update, and delete vehicles  
-✅ Track **KM Today, Litres Consumed, L/100KM**  
-✅ Generate **QR Codes** for vehicle details  
-✅ Generate **PDF reports** of vehicle data  
-✅ View **bar and pie charts** for tracking and fuel efficiency
+### Historique
+![Historique](https://via.placeholder.com/800x400.png?text=Historique+Screenshot)
 
 ---
 
-## 🛠️ Tech Stack
-
-- **Backend:** Node.js, Express, MongoDB, Mongoose
-- **Frontend:** React.js
-- **Styling:** CSS (Vanilla) for simplicity
-- **PDF & QR:** PDFKit, qrcode
-- **Charts:** react-chartjs-2, Chart.js
-
----
-
-## 🚀 Setup Instructions
-
-### 1️⃣ Clone the Repository
+## 🛠️ Local Setup
 
 ```bash
-git clone https://github.com/yourusername/dropex-vehicle-tracker.git
-```
+git clone https://github.com/faouez12/dropex-frontend.git
+cd dropex-frontend
+npm install
+npm start

@@ -1,57 +1,105 @@
-.App {
-  text-align: center;
-  font-family: sans-serif;
+/* Dropex - Clean, Professional Styling */
+
+/* General page layout */
+body {
+  background-color: #f5f7fa;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 20px;
 }
 
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-  text-align: left;
-}
-
-h1,
-h2,
-h3 {
-  color: #2c3e50;
+/* Header and title */
+h2 {
   text-align: center;
+  color: #007bff;
+  margin-bottom: 20px;
+  font-weight: 600;
 }
 
+/* Form container */
+.form {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 90%;
+  max-width: 400px;
+}
+
+.form label {
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.form input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.form input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.2);
+}
+
+/* Submit button */
+.submit-button {
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  padding: 12px;
+  font-size: 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.submit-button:hover {
+  background-color: #0056b3;
+}
+
+/* Table styling */
 table {
-  width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
+  width: 95%;
+  max-width: 1000px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  overflow: hidden;
 }
 
 th,
 td {
   border: 1px solid #ddd;
-  padding: 8px;
+  padding: 12px;
   text-align: center;
+  font-size: 15px;
 }
 
 th {
-  background-color: #f4f4f4;
-}
-
-button {
-  padding: 5px 10px;
-  margin: 2px;
-  background-color: #3498db;
-  border: none;
+  background-color: #007bff;
   color: white;
-  cursor: pointer;
-  border-radius: 4px;
+  font-weight: 600;
 }
 
-button:hover {
-  background-color: #2980b9;
+tr:nth-child(even) {
+  background-color: #f9f9f9;
 }
 
-input,
-select {
-  padding: 6px;
-  margin: 5px;
-  border-radius: 4px;
-  border: 1px solid #ccc;
+tr:hover {
+  background-color: #f1f3f6;
 }

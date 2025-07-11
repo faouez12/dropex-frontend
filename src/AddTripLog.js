@@ -17,7 +17,6 @@ function AddTripLog() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       const response = await fetch(
         "https://dropex-backend.onrender.com/api/triplogs",
@@ -27,7 +26,6 @@ function AddTripLog() {
           body: JSON.stringify(formData),
         }
       );
-
       if (response.ok) {
         alert("✅ Trip log added successfully!");
         setFormData({
@@ -39,76 +37,52 @@ function AddTripLog() {
           fuelCost: "",
         });
       } else {
-        alert("❌ Failed to add trip log. Please try again.");
+        alert("❌ Failed to add trip log.");
       }
     } catch (error) {
-      console.error("Error:", error);
-      alert("❌ An error occurred. Please try again.");
+      alert("❌ Error occurred.");
     }
   };
 
   return (
     <div className="page">
-      <h2>🛣️ Add Trip Log</h2>
-      <form onSubmit={handleSubmit} className="form">
-        <label>Branch</label>
-        <input
-          type="text"
-          name="branch"
-          value={formData.branch}
-          onChange={handleChange}
-          required
-        />
-
-        <label>Matricule</label>
-        <input
-          type="text"
-          name="matricule"
-          value={formData.matricule}
-          onChange={handleChange}
-          required
-        />
-
-        <label>Vehicle Type</label>
-        <input
-          type="text"
-          name="vehicleType"
-          value={formData.vehicleType}
-          onChange={handleChange}
-          required
-        />
-
-        <label>Driver Name</label>
-        <input
-          type="text"
-          name="driverName"
-          value={formData.driverName}
-          onChange={handleChange}
-          required
-        />
-
-        <label>KM Today</label>
-        <input
-          type="number"
-          name="kmToday"
-          value={formData.kmToday}
-          onChange={handleChange}
-          required
-        />
-
-        <label>Fuel Cost (TND)</label>
-        <input
-          type="number"
-          name="fuelCost"
-          value={formData.fuelCost}
-          onChange={handleChange}
-          required
-        />
-
-        <button type="submit" className="submit-button">
-          Add Trip Log
-        </button>
-      </form>
+      <div className="card">
+        <h2>🛣️ Add Trip Log</h2>
+        <form onSubmit={handleSubmit} className="form">
+          {[
+            "branch",
+            "matricule",
+            "vehicleType",
+            "driverName",
+            "kmToday",
+            "fuelCost",
+          ].map((field) => (
+            <React.Fragment key={field}>
+              <label>
+                {field === "kmToday"
+                  ? "KM Today"
+                  : field === "fuelCost"
+                  ? "Fuel Cost (TND)"
+                  : field.charAt(0).toUpperCase() + field.slice(1)}
+              </label>
+              <input
+                type={
+                  field === "kmToday" || field === "fuelCost"
+                    ? "number"
+                    : "text"
+                }
+                name={field}
+                value={formData[field]}
+                onChange={handleChange}
+                required
+              />
+            </React.Fragment>
+          ))}
+          <button type="submit" className="submit-button">
+            Add Trip Log
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
