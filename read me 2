@@ -1,0 +1,51 @@
+# 🚚 Dropex Vehicle Tracker
+
+A **full-stack Node.js + React application** to **manage and track Dropex vehicle fleet**, enabling:
+✅ Vehicle registration  
+✅ Tracking KM driven per day  
+✅ Fuel consumption monitoring  
+✅ Generating QR codes for each vehicle  
+✅ Downloadable PDF reports  
+✅ Visual chart analytics for PFE presentation
+
+---
+
+## 📸 Screenshots
+
+![Vehicle List](./screenshots/vehicle-list.png)
+![Add Vehicle](./screenshots/add-vehicle.png)
+![QR Code](./screenshots/qr-code.png)
+![PDF Report](./screenshots/pdf-report.png)
+![Charts](./screenshots/charts.png)
+
+_(Capture and place screenshots in a `/screenshots` folder for your report and GitHub.)_
+
+---
+
+## 🚀 Features
+
+✅ Add, update, and delete vehicles  
+✅ Track **KM Today, Litres Consumed, L/100KM**  
+✅ Generate **QR Codes** for vehicle details  
+✅ Generate **PDF reports** of vehicle data  
+✅ View **bar and pie charts** for tracking and fuel efficiency
+
+---
+
+## 🛠️ Tech Stack
+
+- **Backend:** Node.js, Express, MongoDB, Mongoose
+- **Frontend:** React.js
+- **Styling:** CSS (Vanilla) for simplicity
+- **PDF & QR:** PDFKit, qrcode
+- **Charts:** react-chartjs-2, Chart.js
+
+---
+
+## 🚀 Setup Instructions
+
+### 1️⃣ Clone the Repository
+
+```bash
+git clone https://github.com/yourusername/dropex-vehicle-tracker.git
+```
